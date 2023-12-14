@@ -65,10 +65,7 @@ public class AccountsServiceImpl implements IAccountsService{
        customerRepository.findByMobileNumber(customer.getMobileNumber()).ifPresent(cust -> {
            throw new CustomerAleareadyExisted("Customer already exists");
        });
-       customer.setCreatedAt(LocalDateTime.now());
-       customer.setCreatedBy("Admin");
-       customer.setUpdatedAt(LocalDateTime.now());
-        customer.setUpdatedBy("Admin");
+
        Customer savedCustomer = customerRepository.save(customer);
        accountsRepository.save(createNewAccount(savedCustomer));
 
@@ -86,10 +83,7 @@ public class AccountsServiceImpl implements IAccountsService{
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-       newAccount.setCreatedBy("Admin");
-       newAccount.setUpdatedAt(LocalDateTime.now());
-        newAccount.setUpdatedBy("Admin");
+
         return newAccount;
     }
 
