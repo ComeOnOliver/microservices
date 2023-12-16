@@ -18,3 +18,12 @@ spring:
         show-sql: true
 build:
     version: "1.0"
+
+accounts:
+  message: "Welcome to EazyBank cards related QA APIs"
+  contactDetails:
+    name: "Cherryl Pankaj - QA Lead"
+    email: "cherryl@eazybank.com"
+  onCallSupport:
+    - (310) 875-4367
+    - (201) 236-1267

@@ -1,6 +1,9 @@
 
 package com.eazybytes.accounts.controller;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.Value;
 
 import com.eazybytes.accounts.constants.AccountsConstants;
+import com.eazybytes.accounts.dto.AccountContactDto;
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ErrorDto;
 import com.eazybytes.accounts.dto.ResponseDto;
@@ -43,6 +47,12 @@ public class AccountsController {
 
     @org.springframework.beans.factory.annotation.Value("${build.version}")
     private String buildVersion;
+
+    @Autowired
+    private Environment environment;
+
+    @Autowired
+    private AccountContactDto accountContactDto;
 
     @Operation(summary = "Create a new account", description = "Create a new account", tags = { "Accounts" })
     @ApiResponse(responseCode = "201", description = "Account created successfully")
@@ -95,6 +105,24 @@ public class AccountsController {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(buildVersion);
+
+    }
+
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion() {
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(environment.getProperty("MAVEN_HOME"));
+
+    }
+
+    @GetMapping("/contact-version")
+    public ResponseEntity<AccountContactDto> getContactVersion() {
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(accountContactDto);
 
     }
 }
