@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import lombok.Value;
 
 import com.eazybytes.accounts.constants.AccountsConstants;
 import com.eazybytes.accounts.dto.CustomerDto;
@@ -28,15 +29,20 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
-
 @RestController
 @RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
-@AllArgsConstructor
 @Validated
 @Tag(name = "CURD REST Apis for Accounts", description = "Details of The Accounts API")
 public class AccountsController {
 
-    private IAccountsService iAccountsService;
+    private final IAccountsService iAccountsService;
+
+    public AccountsController(IAccountsService iAccountsService) {
+        this.iAccountsService = iAccountsService;
+    }
+
+    @org.springframework.beans.factory.annotation.Value("${build.version}")
+    private String buildVersion;
 
     @Operation(summary = "Create a new account", description = "Create a new account", tags = { "Accounts" })
     @ApiResponse(responseCode = "201", description = "Account created successfully")
@@ -79,5 +85,16 @@ public class AccountsController {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ResponseDto(AccountsConstants.STATUS_417, AccountsConstants.MESSAGE_417_UPDATE));
         }
+    }
+
+    @Operation(summary = "Get the build version", description = "Get the version", tags = { "System" })
+    @ApiResponse(responseCode = "200", description = "Data fetched successfully")
+    @GetMapping("/version")
+    public ResponseEntity<String> getVersion() {
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(buildVersion);
+
     }
 }

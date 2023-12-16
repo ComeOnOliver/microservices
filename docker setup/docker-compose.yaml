@@ -1,0 +1,40 @@
+services:
+  accounts1:
+    image: "haorans99/microservices:s4"
+    container_name: accounts1
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    networks:
+      - haoran
+  accounts2:
+    image: "haorans99/accounts:s4"
+    container_name: accounts2
+    ports:
+      - "8081:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+    networks:
+      - haoran
+  accounts3:
+    image: "haorans99/accounts2:s4"
+    container_name: accounts3
+    ports:
+      - "8082:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    networks:
+      - haoran
+networks:
+  haoran:
+    driver: "bridge"

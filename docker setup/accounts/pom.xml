@@ -11,6 +11,7 @@
 	<groupId>com.eazybytes</groupId>
 	<artifactId>accounts</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>accounts</name>
 	<description>Microservices for accounts</description>
 	<properties>
@@ -68,6 +69,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<name>haorans99/accounts:s4</name>
+					</image>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -76,6 +80,16 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <to>
+            <image>haorans99/accounts2:s4</image>
+          </to>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
 
