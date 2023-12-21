@@ -16,13 +16,20 @@ spring:
         hibernate:
             ddl-auto: update
         show-sql: true
+    config:
+        import:
+            - "application-qa.yml"
+            - "application-prod.yml"
+    profiles:
+        active:
+            - "prod"
 build:
     version: "1.0"
 
 accounts:
   message: "Welcome to EazyBank cards related QA APIs"
   contactDetails:
-    name: "Cherryl Pankaj - QA Lead"
+    name: "Developer"
     email: "cherryl@eazybank.com"
   onCallSupport:
     - (310) 875-4367
